@@ -1,11 +1,41 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        footballer-app
-      </h1>
+  <div class="login-top-wrapper">
+    <el-card style="flex:1">
+
+      <div class="login-title">
+        <h1>Footballer App</h1>
+      </div>
+
+      <div class="login">
+        <h3>ログイン</h3>
+        <form>
+
+          <div class="form-content">
+            <span>ユーザーID</span>
+            <el-input placeholder="" vue-model="formData.id" />
+          </div>
+
+          <div class="form-content">
+            <span>メールアドレス</span>
+            <el-input placeholder="" vue-model="formData.id" />
+          </div>
+
+          <div class="form-content">
+            <el-checkbox v-model="isCreateMode">アカウントを作成する</el-checkbox>
+          </div>
+
+          <div class="login-button">
+            <el-button type="primary">{{buttonText}}</el-button>
+          </div>
+
+        </form>
+      </div>
+
+    </el-card>
+  </div>
       
+
+
 </template>
 
 <script>
