@@ -31,4 +31,4 @@ export default{
         ...mapGetters(['user'])
     }
 }
-</script>
+</script>s
