@@ -2,10 +2,10 @@
 <section class="container posts-page">
     <el-card style="flex:1">
         <div slot="header" class="clearfix">
-            <el-input placeholder="タイトルを入力" v-model="formData.title" />
+            <el-input placeholder="選手名" v-model="formData.title" />
         </div>
         <div>
-            <el-input placeholder="本文を入力....." type="textarea" rows="15"
+            <el-input placeholder="選手の特徴" type="textarea" rows="15"
             v-model="formData.body" />
         </div>
         <div class="text-right" style="margin-top:16px">
@@ -37,11 +37,18 @@ export default{
         ...mapGetters(['user'])
     },
     methods:{
-        publish(){
-
-        }
+        async public(){
+            const payload={
+                user:this.user,
+                ...this.formData,
+            }
+            await this.publishPost({payload})
+            this.$router.push('/posts')
+        },
+        ...mapActions('users',['updateUser']),
+        ...mapActions('posts',['publishPost'])
     }
-}
+ }
 </script>
 
 <style>
