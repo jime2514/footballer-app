@@ -4,9 +4,10 @@ module.exports = {
   mode: 'universal',
   srcDir: 'app',
   router: {
-    middleware: [
-      'auth-cookie'
-    ]
+    middleware:['auth-cookie']
+    // middleware: [
+    //   'auth-cookie'
+    // ]
   },
   /*
   ** Headers of the page
