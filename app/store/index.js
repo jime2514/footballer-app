@@ -7,7 +7,7 @@ export const state = () => ({
 
 export const getters = {
   isLoggedIn: state => state.isLoggedIn,
-  user: state => (state.user ? Object.assign({ likes: [] }, state.user) : null)
+  user: (state) => state.user ? Object.assign({ likes: [] }, state.user) : null
 }
 
 export const mutations = {
