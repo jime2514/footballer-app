@@ -6,8 +6,8 @@ export const state = () => ({
 })
 
 export const getters = {
-  posts:(state)=>
-  state.posts.map((post)=>Object.assign({likes:[]},post))
+  isLoggedIn: state => state.isLoggedIn,
+  user: state => (state.user ? Object.assign({ likes: [] }, state.user) : null)
 }
 
 export const mutations = {
@@ -54,15 +54,5 @@ export const actions = {
     user.likes = post.likes.filter(like => like.user_id !== user.id) || []
     const newUser = await this.$axios.$put(`/users/${user.id}.json`, user)
     commit('updateUser', { user: newUser })
-  },
-
-  async addLikeToPost({commit},{user,post}){
-    post.like.push({
-      created_at:moment().format(),
-      user_id:user.id,
-      post_id:post.id
-    })
-    const newPost=await this.$axios.$put(`/posts/${post.id}.json`,post)
-    commit('updatePost',{post:newPost})
   }
 }
