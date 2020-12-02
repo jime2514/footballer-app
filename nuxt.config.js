@@ -4,10 +4,9 @@ module.exports = {
   mode: 'universal',
   srcDir: 'app',
   router: {
-    middleware:['auth-cookie']
-    // middleware: [
-    //   'auth-cookie'
-    // ]
+    middleware: [
+      'auth-cookie'
+    ]
   },
   /*
   ** Headers of the page
@@ -56,8 +55,7 @@ module.exports = {
   ** Axios module configuration
   */
   axios: {
-    baseURL: 'https://footballer-app2.firebaseio.com/'
-    
+    baseURL: 'https://nuxt-blog-service.firebaseio.com'
     // See https://github.com/nuxt-community/axios-module#options
-  },
+  }
 }
