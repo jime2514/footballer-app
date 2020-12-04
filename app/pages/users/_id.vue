@@ -1,6 +1,7 @@
 <template>
   <div>
       <el-row v-if="user">
+        <!---v-if--->
         <el-col :span="6">
           <el-card class="text-center" style="margin-right: 16px;">
             <div>
