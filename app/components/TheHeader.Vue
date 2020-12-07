@@ -1,40 +1,99 @@
 <template>
-<client-only>
-  <el-menu mode="horizontal" :router="true">
-    <el-menu-item index="1" style="pointer-events:none;">
-      football-app
-    </el-menu-item>
-    <el-menu-item index="2" :route="{ path: '/posts/' }">
-      投稿一覧
-    </el-menu-item>
-
-    
-      <el-menu-item index="4" style="float: right;" :route="{ path: `/users/${user.id}` }" v-if="user">
-        <span>{{user.id}}</span>
-      </el-menu-item>
-
-      <el-menu-item index="3" style="float: right;" :route="{ path: 'pages/' }" v-else>
+  <section class="container">
+    <el-card style="flex: 1">
+      <div slot="header" class="clearfix">
         <span>ログイン</span>
-      </el-menu-item>
-
-
-    
-    <el-menu-item index="5" style="float: right" :route="{ path: '/posts/new' }">
-      新規投稿
-    </el-menu-item>
-
-  </el-menu>
-  </client-only>
+      </div>
+      <form>
+        <div class="form-content">
+          <span>ユーザー ID</span>
+          <el-input placeholder="" v-model="formData.id" />
+        </div>
+        <div class="form-content">
+          <el-checkbox v-model="isCreateMode">アカウントを作成する</el-checkbox>
+        </div>
+        <div class="text-right">
+          <el-button type="primary" @click="handleClickSubmit">{{buttonText}}</el-button>
+        </div>
+      </form>
+    </el-card>
+  </section>
 </template>
 
-
-
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import Cookies from 'universal-cookie'
 
 export default {
+  asyncData({ redirect, store }) {
+    if (store.getters['user']) {
+      redirect('/posts/')
+    }
+    return {
+      isCreateMode: false,
+      formData: {
+        id: ''
+      }
+    }
+  },
   computed: {
+    buttonText() {
+      return this.isCreateMode ? '新規登録' : 'ログイン'
+    },
     ...mapGetters(['user'])
+  },
+  methods: {
+    async handleClickSubmit() {
+      const cookies = new Cookies()
+      if (this.isCreateMode) {
+        try {
+          await this.register({ ...this.formData })
+          this.$notify({
+            type: 'success',
+            title: 'アカウント作成完了',
+            message: `${this.formData.id} として登録しました`,
+            position: 'bottom-right',
+            duration: 1000
+          })
+          cookies.set('user', JSON.stringify(this.user))
+          this.$router.push('/posts/')
+        } catch (e) {
+          this.$notify.error({
+            title: 'アカウント作成失敗',
+            message: '既に登録されているか、不正なユーザー ID です',
+            position: 'bottom-right',
+            duration: 1000
+          })
+        }
+      } else {
+        try {
+          await this.login({ ...this.formData })
+          this.$notify({
+            type: 'success',
+            title: 'ログイン成功',
+            message: `${this.formData.id} としてログインしました`,
+            position: 'bottom-right',
+            duration: 1000
+          })
+          cookies.set('user', JSON.stringify(this.user))
+          this.$router.push('/posts/')
+        } catch (e) {
+          this.$notify.error({
+            title: 'ログイン失敗',
+            message: '不正なユーザー ID です',
+            position: 'bottom-right',
+            duration: 1000
+          })
+        }
+      }
+    },
+    ...mapActions(['login', 'register'])
   }
 }
 </script>
+
+<style scoped>
+.form-content {
+  margin: 16px 0;
+}
+</style>
