@@ -1,59 +1,31 @@
 <template>
 <client-only>
-  <div class="header-wrapper">
-    <div class="cont">
-      <div class="headers">
+  <el-menu mode="horizontal" :router="true">
+    <el-menu-item index="1" style="pointer-events:none;">
+      football-app
+    </el-menu-item>
+    <el-menu-item index="2" :route="{ path: '/posts/' }">
+      投稿一覧
+    </el-menu-item>
 
-        <div class="header header-1">
-          <a href="/">footballer app</a>
-        </div>
+    
+      <el-menu-item index="4" style="float: right;" :route="{ path: `/users/${user.id}` }" v-if="user">
+        <span>{{user.id}}</span>
+      </el-menu-item>
 
-        <div class="header header-2">
-          <a href="/posts/">投稿一覧</a>
-        </div>
+      <el-menu-item index="3" style="float: right;" :route="{ path: 'pages/' }" v-else>
+        <span>ログイン</span>
+      </el-menu-item>
 
-        <div class="header header-3">
-          <a href="">{{user.id}}</a>
-        </div>
 
-        <div class="header header-4">
-          <a href="/">ログイン</a>
-        </div>
+    
+    <el-menu-item index="5" style="float: right" :route="{ path: '/posts/new' }">
+      新規投稿
+    </el-menu-item>
 
-      </div>
-    </div>
-  </div>
-</client-only>
+  </el-menu>
+  </client-only>
 </template>
-
-<style>
-
-.headers{
-  width: 100%;
-  height: 70px;
-  background-color: aquamarine;
-}
-
-.headers {
-  display: inline-block;
-}
-
-.header {
-  display: inline-block;
-}
-
-.header a {
-  color: black;
-  font-size: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 20px;
-  padding-top: 20px;
-  margin-top: 30px;
-}
-
-
-</style>
 
 
 
