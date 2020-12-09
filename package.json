@@ -15,6 +15,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.0.0",
     "element-ui": "^2.4.6",
+    "firebase": "^8.1.2",
     "lodash.clonedeep": "^4.5.0",
     "moment": "^2.22.2",
     "nuxt": "^2.0.0",
@@ -23,5 +24,15 @@
   "devDependencies": {
     "cross-env": "^5.0.1",
     "json-server": "^0.14.0"
-  }
+  },
+  "main": ".prettierrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jime2514/footballer-app.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jime2514/footballer-app/issues"
+  },
+  "homepage": "https://github.com/jime2514/footballer-app#readme"
 }
