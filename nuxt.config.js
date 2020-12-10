@@ -55,7 +55,7 @@ module.exports = {
   ** Axios module configuration
   */
   axios: {
-    baseURL: 'https://football-app-61630.firebaseio.com'
+    baseURL: 'https://football-1aa1c0083-default-rtdb.firebaseio.com'
     // See https://github.com/nuxt-community/axios-module#options
   }
 }

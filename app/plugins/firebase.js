@@ -2,14 +2,14 @@ import firebase from "firebase/app"
 
 if (!firebase.apps.length) {
 firebase.initializeApp({
-  apiKey: "AIzaSyDJYH1q6R3o1_jgOXcvxwFookus3B5u1lU",
-  authDomain: "football-app-61630.firebaseapp.com",
-  databaseURL: "https://football-app-61630.firebaseio.com",
-  projectId: "football-app-61630",
-  storageBucket: "football-app-61630.appspot.com",
-  messagingSenderId: "963121767559",
-  appId: "1:963121767559:web:54cd4b358cd45c1d108422",
-  measurementId: "G-Q6RFX1WNPM"
+  apiKey: "AIzaSyCpsKhG9RgabLwzFjpeVGkK3RDH9_MOxqY",
+  authDomain: "football-1aa1c0083.firebaseapp.com",
+  databaseURL: "https://football-1aa1c0083-default-rtdb.firebaseio.com",
+  projectId: "football-1aa1c0083",
+  storageBucket: "football-1aa1c0083.appspot.com",
+  messagingSenderId: "812579040323",
+  appId: "1:812579040323:web:59aaa0ab394f1332afb8f6",
+  measurementId: "G-710767MSB8"
 })
 }
 
