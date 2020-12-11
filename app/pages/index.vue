@@ -9,6 +9,12 @@
           <span>ユーザー ID</span>
           <el-input placeholder="" v-model="formData.id" />
         </div>
+<!-- googleアカウントでのログイン機能　始 -->
+        <div class="links">
+          <a @click="signIn" class="button--green">signIn</a>
+        </div>
+<!-- googleアカウントでのログイン機能　終 -->
+
         <div class="form-content">
           <el-checkbox v-model="isCreateMode">アカウントを作成する</el-checkbox>
         </div>
@@ -23,7 +29,9 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import Cookies from 'universal-cookie'
-
+// <!-- googleアカウントでのログイン機能　始 -->
+import firebase from 'firebase'
+// <!-- googleアカウントでのログイン機能　終 -->
 export default {
   asyncData({ redirect, store }) {
     if (store.getters['user']) {
@@ -87,7 +95,17 @@ export default {
         }
       }
     },
-    ...mapActions(['login', 'register'])
+    ...mapActions(['login', 'register']),
+// <!-- googleアカウントでのログイン機能　始 -->
+    signIn: function () {
+      const provider = new firebase.auth.GoogleAuthProvider()
+      firebase.auth().signInWithRedirect(provider)
+    },
+
+     signOut: function () {
+      firebase.auth().signOut()
+    }
+// <!-- googleアカウントでのログイン機能　終 -->
   }
 }
 </script>
