@@ -1,117 +1,81 @@
 <template>
   <section class="container">
-    <el-card style="flex: 1">
-      <div slot="header" class="clearfix">
-        <span>ログイン</span>
+    <div v-if="isWaiting">
+      <p>読み込み中</p>
+    </div>
+    <div v-else>
+      <div v-if="!isLogin">
+        <div>
+          <p>
+            <input v-model="email" type="text" placeholder="email">
+          </p>
+          <p>
+            <input v-model="password" type="password" placeholder="password">
+          </p>
+          <p>
+            <input id="checkbox" v-model="register" type="checkbox">
+            <label for="checkbox">新規登録</label>
+          </p>
+          <button @click="passwordLogin">{{ register ? '新規登録' : 'ログイン' }}</button>
+          <p>{{ errorMessage }}</p>
+        </div>
       </div>
-      <form>
-        <div class="form-content">
-          <span>ユーザー ID</span>
-          <el-input placeholder="" v-model="formData.id" />
-        </div>
-<!-- googleアカウントでのログイン機能　始 -->
-        <div class="links">
-          <a @click="signIn" class="button--green">signIn</a>
-        </div>
-<!-- googleアカウントでのログイン機能　終 -->
-
-        <div class="form-content">
-          <el-checkbox v-model="isCreateMode">アカウントを作成する</el-checkbox>
-        </div>
-        <div class="text-right">
-          <el-button type="primary" @click="handleClickSubmit">{{buttonText}}</el-button>
-        </div>
-      </form>
-    </el-card>
+      <div v-else>
+        <p>{{ user.email }}でログイン中</p>
+        <button @click="logOut">ログアウト</button>
+      </div>
+    </div>
   </section>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import Cookies from 'universal-cookie'
-// <!-- googleアカウントでのログイン機能　始 -->
-import firebase from 'firebase'
-// <!-- googleアカウントでのログイン機能　終 -->
+import moment from '~/plugins/moment'
+import { mapGetters } from 'vuex'
+
 export default {
-  asyncData({ redirect, store }) {
-    if (store.getters['user']) {
-      redirect('/posts/')
-    }
+  asyncData () {
     return {
-      isCreateMode: false,
-      formData: {
-        id: ''
-      }
+      register: false,
+      isWaiting: true,
+      isLogin: false,
+      user: [],
+      email: '',
+      password: '',
+      errorMessage: ''
     }
   },
-  computed: {
-    buttonText() {
-      return this.isCreateMode ? '新規登録' : 'ログイン'
-    },
-    ...mapGetters(['user'])
+  mounted: function () {
+    firebase.auth().onAuthStateChanged(user => {
+      this.isWaiting = false
+      this.errorMessage = ''
+      if (user) {
+        this.isLogin = true
+        this.user = user
+      } else {
+        this.isLogin = false
+        this.user = []
+      };
+    })
   },
   methods: {
-    async handleClickSubmit() {
-      const cookies = new Cookies()
-      if (this.isCreateMode) {
-        try {
-          await this.register({ ...this.formData })
-          this.$notify({
-            type: 'success',
-            title: 'アカウント作成完了',
-            message: `${this.formData.id} として登録しました`,
-            position: 'bottom-right',
-            duration: 1000
-          })
-          cookies.set('user', JSON.stringify(this.user))
-          this.$router.push('/posts/')
-        } catch (e) {
-          this.$notify.error({
-            title: 'アカウント作成失敗',
-            message: '既に登録されているか、不正なユーザー ID です',
-            position: 'bottom-right',
-            duration: 1000
-          })
-        }
+    passwordLogin () {
+      const email = this.email
+      const password = this.password
+      if (this.register) {
+        firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
+          const errorMessage = error.message
+          this.errorMessage = errorMessage
+        }.bind(this))
       } else {
-        try {
-          await this.login({ ...this.formData })
-          this.$notify({
-            type: 'success',
-            title: 'ログイン成功',
-            message: `${this.formData.id} としてログインしました`,
-            position: 'bottom-right',
-            duration: 1000
-          })
-          cookies.set('user', JSON.stringify(this.user))
-          this.$router.push('/posts/')
-        } catch (e) {
-          this.$notify.error({
-            title: 'ログイン失敗',
-            message: '不正なユーザー ID です',
-            position: 'bottom-right',
-            duration: 1000
-          })
-        }
+        firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+          const errorMessage = error.message
+          this.errorMessage = errorMessage
+        }.bind(this))
       }
     },
-    ...mapActions(['login', 'register']),
-// <!-- googleアカウントでのログイン機能　始 -->
-    signIn: function () {
-      const provider = new firebase.auth.GoogleAuthProvider()
-      firebase.auth().signInWithRedirect(provider)
-    },
-
-     signOut: function () {
+    logOut () {
       firebase.auth().signOut()
     }
-// <!-- googleアカウントでのログイン機能　終 -->
   }
 }
 </script>
-
-<style scoped>
-.form-content {
-  margin: 16px 0;
-}
-</style>

@@ -49,13 +49,38 @@ module.exports = {
   */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth',
   ],
   /*
   ** Axios module configuration
   */
   axios: {
-    baseURL: 'https://football-1aa1c0083-default-rtdb.firebaseio.com'
+    baseURL: 'https://nuxt-blog-service.firebaseio.com'
     // See https://github.com/nuxt-community/axios-module#options
   }
+}
+
+
+
+
+
+export default {
+  auth: {
+    redirect: {
+      login: '/login',   // 未ログイン時に認証ルートへアクセスした際のリダイレクトURL
+      logout: '/login',  // ログアウト時のリダイレクトURL
+      callback: false,   // Oauth認証等で必要となる コールバックルート
+      home: '/',         // ログイン後のリダイレクトURL
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: 'api/login', method: 'post', propertyName: 'token' },
+          user: { url: 'api/me', method: 'get', propertyName: false},
+          logout: false
+        },
+      }
+    }
+  },
 }

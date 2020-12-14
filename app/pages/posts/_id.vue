@@ -2,7 +2,6 @@
   <section class="container posts-page">
     <div style="flex: 1">
       <el-card v-if="post">
-        <!---v-if--->
         <div slot="header" class="clearfix">
           <h2>
             {{post.title}}
@@ -14,7 +13,6 @@
         </p>
         <p class="text-right">
           <el-button :disabled="!isLoggedIn" type="warning" v-if="isLiked" @click="unlike" round>
-            <!---v-if--->
             <span class="el-icon-star-on" />
             <span>{{post.likes.length}}</span>
           </el-button>

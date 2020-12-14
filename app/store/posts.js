@@ -1,10 +1,5 @@
 import moment from '~/plugins/moment'
 
-// 画像アップ開始
-import firebase from '@/plugins/firebase'
-const firestorage = firebase.storage()
-// 画像アップ終了
-
 export const state = () => ({
   posts: []
 })
@@ -74,26 +69,5 @@ export const actions = {
     post.likes = post.likes.filter(like => like.user_id !== user.id) || []
     const newPost = await this.$axios.$put(`/posts/${post.id}.json`, post)
     commit('updatePost', { post: newPost })
-  },
-
-  // 画像アップ開始
-  uploadImage: (context, payload) => {
-    return new Promise((resolve, reject) => {
-      // firestorage にファイルをアップロード
-      const uploadTask = firestorage
-        .ref('images/' + payload.name)
-        .put(payload.file)
-        .then(snapshot => {
-           // アップロード完了処理。URLを取得し、呼び出し元へ返す。
-           snapshot.ref.getDownloadURL().then(url => {
-             resolve(url)
-           })
-         })
-      
-    }
-    )}
-// 画像アップ終了
-
-
-
+  }
 }

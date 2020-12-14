@@ -24,7 +24,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async login({ commit }, { id }) {
+  async login({ commit }, { id ,password}) {
     if (id.match(/_|@|\./)) {
       throw new TypeError('invalid username')
     }
@@ -41,6 +41,7 @@ export const actions = {
     if (!user.id) throw new Error('Invalid user')
     commit('setUser', { user })
   },
+  
   async addLikeLogToUser({ commit }, { user, post }) {
     user.likes.push({
       created_at: moment().format(),

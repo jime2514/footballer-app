@@ -39,6 +39,7 @@
 <script>
 import moment from '~/plugins/moment'
 import { mapGetters } from 'vuex'
+import header from '~/components/TheHeader.vue'
 
 export default {
   async asyncData({ store }) {
