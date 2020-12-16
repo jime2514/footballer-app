@@ -39,6 +39,16 @@ export default {
       } catch(error) {
         console.log(error);
       }
+    },
+
+    showMessage() {
+      const response = this.$axios.$get("/api")
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        })
     }
   }
 }

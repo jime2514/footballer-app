@@ -50,14 +50,25 @@ module.exports = {
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     '@nuxtjs/auth',
   ],
   /*
   ** Axios module configuration
   */
   axios: {
+    prefix: '/api',
     baseURL: 'https://nuxt-blog-service.firebaseio.com'
     // See https://github.com/nuxt-community/axios-module#options
+  },
+
+  proxy: {
+    '/api': {
+      target: 'http://localhost:3000',
+      pathRewrite: {
+        '^/api': '/'
+      }
+    }
   },
 
   auth: {
