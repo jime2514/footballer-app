@@ -1,81 +1,53 @@
 <template>
   <section class="container">
-    <div v-if="isWaiting">
-      <p>読み込み中</p>
-    </div>
-    <div v-else>
-      <div v-if="!isLogin">
-        <div>
-          <p>
-            <input v-model="email" type="text" placeholder="email">
-          </p>
-          <p>
-            <input v-model="password" type="password" placeholder="password">
-          </p>
-          <p>
-            <input id="checkbox" v-model="register" type="checkbox">
-            <label for="checkbox">新規登録</label>
-          </p>
-          <button @click="passwordLogin">{{ register ? '新規登録' : 'ログイン' }}</button>
-          <p>{{ errorMessage }}</p>
-        </div>
-      </div>
-      <div v-else>
-        <p>{{ user.email }}でログイン中</p>
-        <button @click="logOut">ログアウト</button>
-      </div>
+    <div class=".login-container">
+      <el-form :model="form">
+        <el-form-item label="メールアドレス">
+          <el-input v-model="form.email" />
+        </el-form-item>
+
+        <el-form-item label="パスワード">
+          <el-input v-model="form.password" type="password" />
+        </el-form-item>
+
+        <el-button type="primary" @click="login" value="ログイン" />
+      </el-form>
     </div>
   </section>
 </template>
 
 <script>
-import moment from '~/plugins/moment'
-import { mapGetters } from 'vuex'
-
 export default {
-  asyncData () {
-    return {
-      register: false,
-      isWaiting: true,
-      isLogin: false,
-      user: [],
-      email: '',
-      password: '',
-      errorMessage: ''
+  middleware({ store, redirect }) {
+    if(store.$auth.loggedIn) {
+      redirect('/');
     }
   },
-  mounted: function () {
-    firebase.auth().onAuthStateChanged(user => {
-      this.isWaiting = false
-      this.errorMessage = ''
-      if (user) {
-        this.isLogin = true
-        this.user = user
-      } else {
-        this.isLogin = false
-        this.user = []
-      };
-    })
+  data() {
+    return {
+      form: {
+        email: '',
+        password: ''
+      }
+    }
   },
   methods: {
-    passwordLogin () {
-      const email = this.email
-      const password = this.password
-      if (this.register) {
-        firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
-          const errorMessage = error.message
-          this.errorMessage = errorMessage
-        }.bind(this))
-      } else {
-        firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-          const errorMessage = error.message
-          this.errorMessage = errorMessage
-        }.bind(this))
+    async login() {
+      try {
+        const response = await this.$auth.loginWith('local', { data: this.form });
+        console.log(response);
+      } catch(error) {
+        console.log(error);
       }
-    },
-    logOut () {
-      firebase.auth().signOut()
     }
   }
 }
 </script>
+
+<style>
+.login-container {
+  margin: 50px auto;
+  width: 300px;
+  text-align: center;
+}
+</style>

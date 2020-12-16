@@ -58,14 +58,8 @@ module.exports = {
   axios: {
     baseURL: 'https://nuxt-blog-service.firebaseio.com'
     // See https://github.com/nuxt-community/axios-module#options
-  }
-}
+  },
 
-
-
-
-
-export default {
   auth: {
     redirect: {
       login: '/login',   // 未ログイン時に認証ルートへアクセスした際のリダイレクトURL
