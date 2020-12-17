@@ -41,8 +41,19 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    '~/plugins/firebase.js',
+    '~/plugins/firebase.auth.js'
   ],
+
+
+
+  proxy: {
+    '/api/': {target: 'http://localhost:3000', pathRewrite: {'^/api/': '/'}}
+  },
+
+
+
 
   /*
   ** Nuxt.js modules
@@ -57,7 +68,7 @@ module.exports = {
   ** Axios module configuration
   */
   axios: {
-    prefix: '/api',
+    proxy: true,
     baseURL: 'https://nuxt-blog-service.firebaseio.com'
     // See https://github.com/nuxt-community/axios-module#options
   },
@@ -73,15 +84,15 @@ module.exports = {
 
   auth: {
     redirect: {
-      login: '/login',   // 未ログイン時に認証ルートへアクセスした際のリダイレクトURL
-      logout: '/login',  // ログアウト時のリダイレクトURL
+      login: '/',   // 未ログイン時に認証ルートへアクセスした際のリダイレクトURL
+      logout: '/',  // ログアウト時のリダイレクトURL
       callback: false,   // Oauth認証等で必要となる コールバックルート
-      home: '/',         // ログイン後のリダイレクトURL
+      home: '/posts/_id',         // ログイン後のリダイレクトURL
     },
     strategies: {
       local: {
         endpoints: {
-          login: { url: 'api/login', method: 'post', propertyName: 'token' },
+          login: { url: '/', method: 'post', propertyName: 'token' },
           user: { url: 'api/me', method: 'get', propertyName: false},
           logout: false
         },

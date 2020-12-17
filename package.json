@@ -17,10 +17,13 @@
     "@nuxtjs/axios": "^5.0.0",
     "@nuxtjs/proxy": "^2.1.0",
     "element-ui": "^2.4.6",
+    "firebase": "^8.2.0",
     "lodash.clonedeep": "^4.5.0",
     "moment": "^2.22.2",
     "nuxt": "^2.0.0",
-    "universal-cookie": "^3.0.4"
+    "save": "^2.4.0",
+    "universal-cookie": "^3.0.4",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "cross-env": "^5.0.1",
