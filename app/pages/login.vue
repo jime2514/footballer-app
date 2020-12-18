@@ -4,22 +4,12 @@
       <v-col :sm="12" :md="8">
         <p class="text-center">ログインユーザのみ閲覧可能なコンテンツ</p>
         <div class="pa-5">
-          <v-btn block
-            color="indigo darken-1"
-            nuxt
-            to="/sample"
-            class="white--text"
-          >
+          <v-btn block color="indigo darken-1" nuxt to="/sample" class="white--text">
             サンプルページへ
           </v-btn>
         </div>
         <div class="pa-5">
-          <v-btn
-            block
-            outlined
-            color="grey darken-3"
-            @click="signOut"
-          >
+          <v-btn block outlined color="grey darken-3" @click="signOut">
             ログアウト
           </v-btn>
         </div>

@@ -1,4 +1,5 @@
 <template>
+<client-only>
     <v-container>
         <v-row justify="center">
             <v-col sm="12" md="5">
@@ -12,7 +13,8 @@
                             <v-tab to="/register">アカウント登録</v-tab>
                         </v-tabs>
 
-                        <v-row>
+                        <div>
+                            <v-row>
                             <v-col sm="12">
                                 <v-card flat>
                                     <v-card-text class="pa-0">
@@ -31,6 +33,8 @@
                                 </v-card>
                             </v-col>
                         </v-row>
+                        </div>
+                        
                         <v-divider class="my-8" />
                         
                         <v-alert v-if="socialLoginErrorMsg" dense text type="error" dismissible >
@@ -42,6 +46,9 @@
             </v-col>
         </v-row>
     </v-container>
+</client-only>
+
+    
 </template>
 
 <script>
@@ -92,6 +99,8 @@ export default {
 </script>
 
 
+
+
 <style lang="scss" scoped>
 @mixin social_button($brand-color: #999,$text-color: #fff){
     background-color: $brand-color !important;
@@ -106,12 +115,6 @@ export default {
     }
 }
 
-.color-twitter {
-    @include social_button(#1da1f2);
-}
-.color-facebook {
-    @include social_button(#3b5998);
-}
 .color-google {
     @include social_button(#fff, #757575);
     @at-root {
@@ -121,6 +124,3 @@ export default {
     }
 }
 </style>
-
-
-
