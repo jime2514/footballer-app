@@ -27,7 +27,46 @@ export const actions = {
 
     signOut() {
         return auth().signOut()
-    }
+    },
+
+    // 投稿機能（仮）始まり
+    async postContent(context, payload) {
+        const contents = payload
+        const loadImage = await context.dispatch('uploadImage', {
+          name: contents.image.name,
+          file: contents.image.file
+        })
+        contents.image = loadImage
+     
+        const articlesRef = db.collection('articles')
+        await articlesRef.add(contents)
+    },
+
+
+    uploadImage(context, payload) {
+        if (!payload.file) {
+          return {
+            name: 'サンプル画像',
+            src: 'https://placehold.jp/150x150.png'
+          }
+        }
+        const storageRef = storage.ref()
+     
+        return new Promise((resolve, reject) => {
+          storageRef
+            .child(`images/${payload.name}`)
+            .put(payload.file)
+            .then((snapshot) => {
+              snapshot.ref.getDownloadURL().then((url) => {
+                resolve({ name: payload.name, src: url })
+              })
+            })
+            .catch((err) => {
+              console.log('画像投稿エラー', err)
+            })
+        })
+      }
+    // 投稿機能（仮）終わり
 }
 
 export const getters = {

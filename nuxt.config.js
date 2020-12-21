@@ -63,6 +63,7 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
     '@nuxtjs/auth',
+    '@nuxtjs/vuetify',
   ],
   /*
   ** Axios module configuration

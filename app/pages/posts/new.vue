@@ -1,57 +1,127 @@
 <template>
-  <section class="container posts-page">
-    <el-card style="flex: 1">
-      <div slot="header" class="clearfix">
-        <el-input placeholder="タイトルを入力" v-model="formData.title" />
-      </div>
-      <div>
-        <el-input placeholder="本文を入力……" type="textarea" rows="15" v-model="formData.body" />
-      </div>
-      <div class="text-right" style="margin-top: 16px;">
-        <el-button type="primary" @click="publish" round>
-          <span class="el-icon-upload2" />
-          <span>Publish</span>
-        </el-button>
-      </div>
-    </el-card>
-  </section>
-</template>
+<div class="post-wrapper">
+  <div class="post-title">
+    <h2>投稿ページ</h2>
+  </div>
+  
+ <div class="post-name-wrapper">
+   <input type="text" class="post-name" v-modle="name"  placeholder="選手の名前" />
+ </div>
 
+ <div class="post-text-wrapper">
+   <textarea class="post-text" v-model="body" placeholder="コメント"/>
+ </div>
+
+ <div class="post-image-wrapper">
+    <img v-if="preview" src="preview"/>
+    <input type="file" accept="image/png,image/jpeg" @change="previewImage"/>
+  </div>
+
+ <div class="post-btn-wrapper">
+   <button class="post-btn" @click="postContents">投稿</button>
+ </div>
+</div>
+
+
+ <!-- プレビュー -->
+</template>
+.
+.
+.
 <script>
-import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  asyncData({ redirect, store }) {
-    if (!store.getters['user']) {
-      redirect('/')
-    }
-    return {
-      formData: {
-        title: '',
-        body: ''
-      }
-    }
-  },
-  computed: {
-    ...mapGetters(['user'])
-  },
-  methods: {
-    async publish() {
-      const payload = {
-        user: this.user,
-        ...this.formData
-      }
-      await this.publishPost({ payload })
-      this.$router.push('/posts')
-    },
-    ...mapActions('users', ['updateUser']),
-    ...mapActions('posts', ['publishPost'])
+  data: {
+  return () {
+   file: null
+   preview: ''
+   fileName: ''
+   body: ''
   }
+ },
+
+  methods: {
+    previewImage(e) {
+    const file = e.target.files[0]const file = e.target.files[0]
+    this.file = file
+    const reader = new FileReader()
+     reader.onload = (e) => {
+       this.preview = e.target.result
+       this.fileName = file.name
+     }
+     reader.readAsDataURL(file)
+},
+
+   async postContents() {
+     const d = new Date()
+     const today = d.toLocaleDateString()
+
+     const contents = {
+       note: {
+         created_at: today,
+         title: this.title,
+         name:this.name,
+         body: this.body
+       },
+       image: {
+         file: this.file,
+         name: this.fileName
+       }
+     }
+     await this.$store.dispatch('postContents', contents)
+     console.log('load finish') // dataをclearにする
+   }
+ }
 }
+
 </script>
 
 <style>
-.posts-page .el-table__row {
-  cursor: pointer;
+.post-title h2 {
+font-size: 28px;
+}
+
+.post-name-wrapper {
+margin-top: 20px;
+}
+
+.post-name {
+width: 300px;
+background-color: #ffff;
+border: 1px solid ;
+height: 25px;
+}
+
+.post-image-wrapper {
+display: flex;
+flex-direction: column;
+}
+
+.post-text-wrapper {
+display: flex;
+flex-direction: column;
+margin: 10px 0 10px 0;
+}
+
+.post-text {
+width: 500px;
+height: 200px;
+background-color: #ffff;
+border: 1px solid ;
+}
+
+.post-image-wrapper {
+  margin: 10px 0;
+  width: 300px;
+}
+
+.post-btn-wrapper {
+  display: inline-block;
+}
+
+.post-btn {
+padding: 10px 50px;
+background-color: #ffff;
+border: solid 1px;
 }
 </style>
