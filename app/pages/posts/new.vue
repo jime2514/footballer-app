@@ -5,7 +5,7 @@
   </div>
   
  <div class="post-name-wrapper">
-   <input type="text" class="post-name" v-modle="name"  placeholder="選手の名前" />
+   <input type="text" class="post-name" v-modle="p_name"  placeholder="選手の名前" />
  </div>
 
  <div class="post-text-wrapper">
@@ -42,7 +42,7 @@ export default {
 
   methods: {
     previewImage(e) {
-    const file = e.target.files[0]const file = e.target.files[0]
+    const file = e.target.files[0];
     this.file = file
     const reader = new FileReader()
      reader.onload = (e) => {
@@ -60,7 +60,7 @@ export default {
        note: {
          created_at: today,
          title: this.title,
-         name:this.name,
+         p_name:this.p_name,
          body: this.body
        },
        image: {

@@ -1,4 +1,4 @@
-import { auth } from '~/plugins/firebase.js'
+import { auth ,storage, db } from '~/plugins/firebase'
 
 export const strict = false
 
