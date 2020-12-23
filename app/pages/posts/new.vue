@@ -5,7 +5,7 @@
   </div>
   
  <div class="post-name-wrapper">
-   <input type="text" class="post-name" v-modle="p_name"  placeholder="選手の名前" />
+   <input type="text" class="post-name" v-model="p_name"  placeholder="選手の名前" />
  </div>
 
  <div class="post-text-wrapper">
@@ -23,20 +23,19 @@
 </div>
 
 
- <!-- プレビュー -->
+
 </template>
-.
-.
-.
+
 <script>
 
 export default {
-  data: {
-  return () {
-   file: null
-   preview: ''
-   fileName: ''
-   body: ''
+  data() {
+  return  {
+   file: null,
+   preview: '',
+   fileName: '',
+   body: '',
+   p_name:'',
   }
  },
 
@@ -61,7 +60,7 @@ export default {
          created_at: today,
          title: this.title,
          p_name:this.p_name,
-         body: this.body
+         body: this.body,
        },
        image: {
          file: this.file,

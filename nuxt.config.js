@@ -70,7 +70,7 @@ module.exports = {
   */
   axios: {
     proxy: true,
-    baseURL: 'https://nuxt-blog-service.firebaseio.com'
+    baseURL: 'https://sample-1-1b377-0083-default-rtdb.firebaseio.com'
     // See https://github.com/nuxt-community/axios-module#options
   },
 

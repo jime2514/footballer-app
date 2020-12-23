@@ -1,7 +1,7 @@
 <template>
     <v-row justify="center">
         <v-col sm="12">
-            <v-btn block class="color-google text-capitalize mb-3" @click="googleLogin">
+            <v-btn block class="color-google text-capitalize mb-3" @click="googleLogin" >
                 <span class="color-google__icon v-icon notranslate v-icon--left mdi theme--light">
                     <svg class="g-img" enable-background="new 0 0 46 46" viewBox="0 0 46 46" xmlns="http://www.w3.org/2000/svg">
                         <g transform="translate(14 14)">

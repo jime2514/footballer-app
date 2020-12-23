@@ -27,7 +27,7 @@
                                                 {{ loginErrorMsg }}
                                             </v-alert>
 
-                                            <v-btn :disabled="!login_valid" color="blue darken-3" class="my-4 white--text" @click="email_login" > ログイン </v-btn>
+                                            <v-btn :disabled="!login_valid" color="blue darken-3" class="my-4 white--text" @click="email_login" :route="{ path: '/posts/new' }"> ログイン </v-btn>
                                         </v-form>
                                     </v-card-text>
                                 </v-card>
