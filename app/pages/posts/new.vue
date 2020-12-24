@@ -13,7 +13,7 @@
  </div>
 
  <div class="post-image-wrapper">
-    <img v-if="preview" src="preview"/>
+    <img v-show="preview" src="preview"/>
     <input type="file" accept="image/png,image/jpeg" @change="previewImage"/>
   </div>
 
@@ -21,9 +21,6 @@
    <button class="post-btn" @click="postContents">投稿</button>
  </div>
 </div>
-
-
-
 </template>
 
 <script>
@@ -68,7 +65,7 @@ export default {
        }
      }
      await this.$store.dispatch('postContents', contents)
-     console.log('load finish') // dataをclearにする
+      console.log('アップロード成功') //投稿成功したらconsoleに表示
    }
  }
 }

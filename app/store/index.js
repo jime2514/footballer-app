@@ -30,7 +30,7 @@ export const actions = {
     },
 
     // 投稿機能（仮）始まり
-    async postContent(context, payload) {
+    async postContents(context, payload) {
         const contents = payload
         const loadImage = await context.dispatch('uploadImage', {
           name: contents.image.name,
